@@ -5,7 +5,7 @@ import java.util.Calendar;
 public class SizeFiles {
     public static void main(String[] args) {
         //String path = "\\\\172.18.48.230\\nice_sc\\niceapps1din\\48\\2018\\8\\5\\SC_SC Dinamarca 1";
-        System.out.print("De la siguiente ruta: " + GetDir() + " hay este numero de grabaciones:  " +  GetCount(GetDir()) );
+        System.out.print("De la siguiente ruta: " + GetDir()[0] + " hay este numero de grabaciones:  " +  GetCount(GetDir()[0]) );
     }
 
     private static String[] GetDirContents(String filePath) {
@@ -33,12 +33,12 @@ public class SizeFiles {
         return total;
     }
 
-    private static String GetDir(){
+    private static String[] GetDir(){
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int day = calendar.get(Calendar.DATE) - 1;
         int month = calendar.get(Calendar.MONTH) + 1;
         //System.out.printf("Día: " + (day - 1) + " mes " + (month + 1));
-        String path = "\\\\172.18.48.230\\nice_sc\\niceapps1din\\48\\2018\\"+month+"\\"+day+ "\\SC_SC Dinamarca 1";
+        String[] path = {"\\\\172.18.48.230\\nice_sc\\niceapps1din\\48\\2018\\"+month+"\\"+day+ "\\SC_SC Dinamarca 1"};
         return path;
     }
 }
