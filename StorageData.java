@@ -38,7 +38,7 @@ class StorageData {
     }
 
     public static ArrayList<StorageData> getStorageSet(String[] paths) {
-        ArrayList<StorageData> dataList = new ArrayList<>();
+        ArrayList<StorageData> dataList = new ArrayList<StorageData>();
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int day = calendar.get(Calendar.DATE) - 1;
         int month = calendar.get(Calendar.MONTH) + 1;
@@ -54,6 +54,24 @@ class StorageData {
         }
 
         return dataList;
+    }
+
+    public static String getJSON(ArrayList<StorageData> list) {
+        StringBuilder strBuilder = new StringBuilder();
+        int limit = list.size();
+
+        strBuilder.append("{\"data\":[");
+
+        for (int i = 0; i < limit; i++) {
+            strBuilder.append(list.get(i).toString());
+
+            if (i < limit - 1)
+                strBuilder.append(',');
+        }
+
+        strBuilder.append("]}");
+
+        return strBuilder.toString().replace("\\", "\\\\");
     }
 
     private static int getPathCount(String path) {
