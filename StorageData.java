@@ -11,15 +11,6 @@ class StorageData {
         this.count = count;
     }
 
-    /*
-        public String getPath() {
-            return path;
-        }
-
-        public int getCount() {
-            return count;
-        }
-    */
     private void setCount(int count) {
         this.count = count;
     }
@@ -89,7 +80,6 @@ class StorageData {
                 total += lineCount;
             }
         }
-
         return total;
     }
 }
