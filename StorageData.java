@@ -11,75 +11,56 @@ class StorageData {
         this.count = count;
     }
 
-    private void setCount(int count) {
-        this.count = count;
-    }
-
     @Override
     public String toString() {
         StringBuilder strBuilder = new StringBuilder();
 
-        strBuilder.append("{\"path\":");
+        strBuilder.append('{');
+        strBuilder.append("\"path\":");
         strBuilder.append("\"" + path + "\",");
 
         strBuilder.append("\"count\":");
-        strBuilder.append(count + "}");
+        strBuilder.append(count);
+        strBuilder.append('}');
 
         return strBuilder.toString();
     }
 
-    public static ArrayList<StorageData> getStorageSet(String[] paths) {
-        ArrayList<StorageData> dataList = new ArrayList<StorageData>();
+    public static StorageData[] get(String[] paths) {
+        ArrayList<StorageData> dataList = new ArrayList<>();
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int day = calendar.get(Calendar.DATE) - 1;
         int month = calendar.get(Calendar.MONTH) + 1;
         int year = calendar.get(Calendar.YEAR);
-        String p;
+        String tmpPath;
 
+        for (String path : paths) {
+            tmpPath = path + "\\" + Integer.toString(year) + "\\" +
+                    Integer.toString(month) + "\\" + Integer.toString(day);
 
-        for (String s : paths) {
-            p = s + "\\" + year + "\\" + month + "\\" + day;
-            dataList.add(new StorageData(
-                    p,
-                    getPathCount(p)));
+            dataList.add(new StorageData(tmpPath,
+                    childrenCount(tmpPath)));
         }
 
-        return dataList;
+        return dataList.toArray(new StorageData[]{});
     }
 
-    public static String getJSON(ArrayList<StorageData> list) {
-        StringBuilder strBuilder = new StringBuilder();
-        int limit = list.size();
-
-        strBuilder.append("{\"data\":[");
-
-        for (int i = 0; i < limit; i++) {
-            strBuilder.append(list.get(i).toString());
-
-            if (i < limit - 1)
-                strBuilder.append(',');
-        }
-
-        strBuilder.append("]}");
-
-        return strBuilder.toString().replace("\\", "\\\\");
-    }
-
-    private static int getPathCount(String path) {
-        String[] rootContents = Directory.getDirContents(path);
+    private static int childrenCount(String path) {
+        String[] rootContents = FileSystem.getChildren(path);
         int total = 0;
 
         for (String dirLevel1 : rootContents) {
             int lineCount = 0;
-            String[] subDirs = Directory.getDirContents(path + "\\" + dirLevel1);
+            String[] subDirs = FileSystem.getChildren(path + "\\" + dirLevel1);
 
             for (String dirLevel2 : subDirs) {
-                lineCount = Directory.getDirContents(path + "\\" + dirLevel1 + "\\" + dirLevel2)
+                lineCount = FileSystem.getChildren(path + "\\" + dirLevel1 + "\\" + dirLevel2)
                         .length;
 
                 total += lineCount;
             }
         }
+
         return total;
     }
 }
