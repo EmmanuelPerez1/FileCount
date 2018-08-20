@@ -24,20 +24,19 @@ public class Json {
 
     /**
      * Parses a stringified JSON String object to a StorageData array
+     *
      * @param json a stringified JSON String object
      * @return array of StorageData
      */
-    public static StorageData[] decode(String json) {
-        ArrayList<StorageData> arrayList = new ArrayList<>();
+    public static String[] decode(String json) {
+        ArrayList<String> arrayList = new ArrayList<>();
         JsonArray jsonArray = new JsonParser().parse(json)
                 .getAsJsonObject().get("data").getAsJsonArray();
 
-        for (int i = 0; i < jsonArray.size(); i++) {
-            arrayList.add(new StorageData(
-                    jsonArray.get(i).getAsJsonObject().get("path").getAsString(),
-                    jsonArray.get(i).getAsJsonObject().get("count").getAsInt()));
-        }
+        for (int i = 0; i < jsonArray.size(); i++)
+            arrayList.add(jsonArray.get(i).getAsJsonObject()
+                    .get("path").getAsString());
 
-        return arrayList.toArray(new StorageData[]{});
+        return arrayList.toArray(new String[]{});
     }
 }
