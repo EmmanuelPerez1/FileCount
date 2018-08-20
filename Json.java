@@ -13,14 +13,10 @@ public class Json {
      * @return String object representation of the StorageData array
      */
     public static String encode(StorageData[] storageDataArray) {
-        ArrayList<StorageData> storageDataList = new ArrayList<>();
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (StorageData storageData : storageDataArray)
-            storageDataList.add(storageData);
-
         stringBuilder.append("{\"data\":");
-        stringBuilder.append(new Gson().toJson(storageDataList));
+        stringBuilder.append(new Gson().toJson(storageDataArray));
         stringBuilder.append('}');
 
         return stringBuilder.toString();
