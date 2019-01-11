@@ -31,7 +31,6 @@ class FileSystem {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                line = reader.readLine();
                 paths.add(line + "\\" + date);
             }
             reader.close();
@@ -69,8 +68,9 @@ class FileSystem {
         for (int i = 0; i <= directories.length - 1; i++) {
             String dir = directories[i];
 
-            builder.append(dir + GetCount(dir) +
-                " grabaciones de la ruta \"" + dir + "\"\n");
+            builder.append(GetCount(dir) +
+                " grabaciones de la ruta " +
+                dir + "\n");
         }
 
         return builder.toString();
